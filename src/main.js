@@ -1,11 +1,11 @@
-const Koa = require('koa');
-
-const app = new Koa();
+// main.js 文件是全局的入口文件
+const app=require('./app/index')
+const { APP_PORT } = require('./config/config.default');
 
 app.use((ctx, next) => {
     ctx.body = 'hello api';
 })
 
-app.listen(3000, () => {
-    console.log('http://127.0.0.1:3000');
+app.listen(8000, () => {
+    console.log(`http://127.0.0.1:8000`);
 })
