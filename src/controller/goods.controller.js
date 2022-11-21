@@ -1,8 +1,11 @@
 const path = require('path');
 
-const { fileUploadError, unSupportedFileType } = require('../constants/err.type');
+const { fileUploadError, unSupportedFileType, publishGoodsError } = require('../constants/err.type');
+const { createGoods } = require('../service/goods.servce');
 
 class GoodsController {
+
+    // 商品图片上传
     async upload(ctx, next) {
         // 一旦文件上传成功的话，文件的地址信息就会被放在 ctx.request.files 里面
         // console.log(ctx.request.files.imag); // 这个 imag 是 key 名
@@ -33,6 +36,23 @@ class GoodsController {
         }
 
     }
+
+    // 参数校验
+    async create(ctx) {
+        // 直接调用service的 createGoods 方法
+        try {
+            const { createdAt, updatedAt, ...res } = await createGoods(ctx.request.body);
+            ctx.body = {
+                code: 0,
+                message: '发布商品成功',
+                result: res
+            }
+        } catch (error) {
+            console.error(error);
+            return ctx.app.emit('error', publishGoodsError, ctx);
+        }
+    }
+
 }
 
 module.exports = new GoodsController();
