@@ -1,7 +1,13 @@
 const path = require('path');
 
-const { fileUploadError, unSupportedFileType, publishGoodsError } = require('../constants/err.type');
-const { createGoods } = require('../service/goods.servce');
+const {
+    fileUploadError,
+    unSupportedFileType,
+    publishGoodsError,
+    invalidGoodsId
+} = require('../constants/err.type');
+
+const { createGoods, updateGoods } = require('../service/goods.servce');
 
 class GoodsController {
 
@@ -50,6 +56,24 @@ class GoodsController {
         } catch (error) {
             console.error(error);
             return ctx.app.emit('error', publishGoodsError, ctx);
+        }
+    }
+
+    // 修改商品的信息
+    async update(ctx) {
+        try {
+            const res = await updateGoods(ctx.params.id, ctx.request.body);
+            if (res) {
+                ctx.body = {
+                    code: 0,
+                    message: '修改商品成功',
+                    result: ''
+                }
+            } else {
+                return ctx.app.emit('error', invalidGoodsId, ctx);
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
