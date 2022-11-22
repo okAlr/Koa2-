@@ -27,6 +27,8 @@ const Goods = seq.define('zd_goods', {
         comment: '商品图片的 url'
     }
 
+}, {
+    paranoid: true // 这个配置项的作用：加上一个 deleteAt 的字段
 })
 
 // 创建表

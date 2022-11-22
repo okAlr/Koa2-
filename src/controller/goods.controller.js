@@ -7,7 +7,12 @@ const {
     invalidGoodsId
 } = require('../constants/err.type');
 
-const { createGoods, updateGoods } = require('../service/goods.servce');
+const {
+    createGoods,
+    updateGoods,
+    removeGoods,
+    restoreGoods
+} = require('../service/goods.servce');
 
 class GoodsController {
 
@@ -67,6 +72,44 @@ class GoodsController {
                 ctx.body = {
                     code: 0,
                     message: '修改商品成功',
+                    result: ''
+                }
+            } else {
+                return ctx.app.emit('error', invalidGoodsId, ctx);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    // 商品下架
+    async remove(ctx) {
+        try {
+            const res = await removeGoods(ctx.params.id);
+            if (res) {
+                ctx.body = {
+                    code: 0,
+                    message: '下架商品成功',
+                    result: ''
+                }
+            } else {
+                return ctx.app.emit('error', invalidGoodsId, ctx);
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // 商品上架
+    async restore(ctx) {
+        try {
+            const res = await restoreGoods(ctx.params.id);
+            if (res) {
+                ctx.body = {
+                    code: 0,
+                    message: '上架商品成功',
                     result: ''
                 }
             } else {
