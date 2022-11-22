@@ -2,7 +2,14 @@ const Router = require('koa-router');
 
 
 const { auth, hadAdminPermission } = require('../middleware/auth.middleware');
-const { upload, create, update, remove,restore } = require('../controller/goods.controller');
+const {
+    upload,
+    create,
+    update,
+    remove,
+    restore,
+    findAll
+} = require('../controller/goods.controller');
 const { validator } = require('../middleware/goods.middleware');
 
 const router = new Router({ prefix: '/goods' });
@@ -26,5 +33,8 @@ router.post('/:id/off', auth, hadAdminPermission, remove);
 
 // 商品上架接口
 router.post('/:id/on', auth, hadAdminPermission, restore);
+
+// 获取商品列表(所有角色都可以获取 商品数据列表)
+router.get('/', findAll);
 
 module.exports = router;
