@@ -4,7 +4,7 @@ const router = new Router({ prefix: '/address' });
 const { auth } = require('../middleware/auth.middleware');
 const { validator } = require('../middleware/addr.middleware');
 
-const { create } = require('../controller/addr.controller');
+const { create,findAll } = require('../controller/addr.controller');
 
 // 添加接口：登陆，格式     
 router.post('/', auth, validator({
@@ -13,5 +13,8 @@ router.post('/', auth, validator({
     address: 'string'
 }), create)
 
+
+// 获取地址列表
+router.get('/', auth, findAll);
 
 module.exports = router;
