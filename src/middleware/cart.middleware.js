@@ -10,7 +10,6 @@ const validator = (rules) => {
         try {
             ctx.verifyParams(rules);
         } catch (error) {
-            console.error(error);
             cartFormatError.result = error;
             return ctx.app.emit('error', cartFormatError, ctx);
         }

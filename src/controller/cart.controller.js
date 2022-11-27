@@ -1,5 +1,13 @@
+
 const { cartFormatError } = require('../constants/err.type');
-const { createOrUpdate, findCarts, updateCarts } = require('../service/cart.service');
+const {
+    createOrUpdate,
+    findCarts,
+    updateCarts,
+    removeCart,
+    selectAllCarts,
+    unSelectAllCarts
+} = require('../service/cart.service');
 
 class CartController {
     // 添加购物车
@@ -78,6 +86,48 @@ class CartController {
         }
 
     }
+
+    // 删除购物车
+    async remove(ctx) {
+        try {
+            const { ids } = ctx.request.body;
+            const res = await removeCart(ids);
+            ctx.body = {
+                code: 0,
+                message: '删除数据库成功',
+                result: res
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // 全选
+    async selectAll(ctx) {
+        const user_id = ctx.state.user.id;
+        const { checkAll } = ctx.request.body;
+        const res = await selectAllCarts(user_id, checkAll);
+        let message = '全部选中';
+        if (!checkAll) {
+            message = '全部不选中';
+        }
+        ctx.body = {
+            code: 0,
+            message,
+            result: res
+        }
+
+    }
+
+    // async unSelectAll(ctx) {
+    //     const user_id = ctx.state.user.id;
+    //     const res = await unSelectAllCarts(user_id);
+    //     ctx.body = {
+    //         code: 0,
+    //         message: '全部不选中',
+    //         result: res
+    //     }
+    // }
 }
 
 module.exports = new CartController();

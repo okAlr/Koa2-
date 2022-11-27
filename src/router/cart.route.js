@@ -6,7 +6,7 @@ const { auth } = require('../middleware/auth.middleware');
 const { validator } = require('../middleware/cart.middleware');
 
 // 控制器
-const { add, findAll,update } = require('../controller/cart.controller');
+const { add, findAll, update, remove, selectAll, unSelectAll } = require('../controller/cart.controller');
 
 
 
@@ -29,6 +29,15 @@ router.patch('/:id', auth, validator({
     number: { type: 'number', required: false },
     selected: { type: 'bool', required: false }
 }), update);
+
+
+// 删除购物车
+router.delete('/', auth, validator({ ids: 'array' }), remove);
+
+
+// 全选与全不选(合并了两个接口)
+router.post('/selectAll', auth, selectAll);
+
 
 // 4. 导出 router 对象
 module.exports = router;

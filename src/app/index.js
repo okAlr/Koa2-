@@ -30,7 +30,10 @@ app.use(koaBody({
         // 在 option 里面的相对路径，不是相对的当前路径，相对 process.cwd() ，就是当前执行的进程所在的文件
         uploadDir: path.join(__dirname, '../upload'),
         keepExtensions: true
-    }
+    },
+    // 默认只会在这'POST', 'PUT', 'PATCH'三种方法中将 request.body 下面的内容挂载到 ctx 下面
+    // 若要让他支持其他方法的话，需要手动配置一个  parsedMethods 参数选项
+    parsedMethods: ['POST', 'PUT', 'PATCH', 'DELETE']
 }));
 
 // 有了下面这一步（注册之后），就会在 ctx 上面挂载一个方法 verifyParams

@@ -73,6 +73,28 @@ class CartService {
 
         return await res.save();
     }
+
+
+    async removeCart(ids) {
+        // 可批量删除
+        return await Cart.destroy({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        })
+    }
+
+    // 全选或全不选
+    async selectAllCarts(user_id, checkAll) {
+        return await Cart.update({ selected: checkAll }, {
+            where: {
+                user_id
+            }
+        })
+    }
+
 }
 
 module.exports = new CartService();
