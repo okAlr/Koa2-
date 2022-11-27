@@ -40,8 +40,8 @@ app.use(koaBody({
 // 这样每个中间件都可以调用这个方法进行参数校验
 app.use(parameter(app));
 
-// use(router.allowedMethods())
-app.use(router.routes());
+
+app.use(router.routes()).use(router.allowedMethods());
 
 // KoaStatic 的作用就是：将某一个文件夹下面的资源作为静态资源
 app.use(KoaStatic(path.join(__dirname, '../upload')));
