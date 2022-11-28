@@ -12,8 +12,7 @@
 
 # 项目结构图
 
-![image-20221111171941228](/Users/abby/Library/Application Support/typora-user-images/image-20221111171941228.png)
-
+https://img-blog.csdnimg.cn/6afe36c5765244a2a26a5f54797552cd.png
 
 
 # 一. 项目的初始化
